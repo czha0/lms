@@ -19,30 +19,27 @@ and also to fulfill his computer science course requirement [^2] .
 2. Data calculation/extraction from existing lease records
 3. Data output for extracted analysis
 
- 
-    
-
 ## User Stories (Who will use it?/ Scope of Work)
 **BOLDED items included in Phase 1 of this project**
 
 *(italics functions **MIGHT NOT** be implemented in this project)*
 
 1.  Lease administrator
-    * Manage lease details, such as:
+    * Manage (set) lease details, such as:
+        * **Set up properties to rent with unique ID**
         * **Lease starts and expiration dates**
-        * **Lease location: store number, details address, etc.**
+        * **Confirm input once new lease/property processed to the system**
+        * *Lease location: store number, details address, etc.*
         * *//Update lease expiration when renewals come*
         * *//Additional fields to make notes for specific lease*
     * Monitoring upcoming lease expiration
-        * **Extract lease expiring in a month/quarter/year**
+        * *Extract lease expiring in a month/quarter/year*
     
 2. Finance department 
-    * Reconcile monthly/quarterly lease payment
-      * **Extract *(or export)* payment schedule on monthly basis**
-      * Print out *(or export)* annual lease obligation for the auditor
-    * *//Match lease obligation with corporate fiscal calendar*
-    * *//Property tax and Common Area Maintenance (CAM) Module*
-    * *//Revenue analysis with importing financial data*
+    * Monitor expired lease to prevent sending cheques to expired contract
+      * *Print out *(or export)* current rent roll (active leases)*
+      * **Print out total monthly payment for active leases**
+
     
 [^1]: Why is this project of interest of you?
 

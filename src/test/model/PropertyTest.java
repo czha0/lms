@@ -6,17 +6,29 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PropertyTest {
     private Property testProperty;
+    private Property testPropertyB;
 
     @BeforeEach
     public void setUp() {
-        testProperty = new Property("Thunderbird Stadium", "UBC Property Trust");
+        testProperty = new Property("PropertyA", "LandlordA");
     }
 
     @Test
     void testConstructor() {
-        assertEquals("Thunderbird Stadium", testProperty.getPropertyName());
-        assertEquals(1,testProperty.getPropertyId());
-        assertEquals("UBC Property Trust",testProperty.getLandlordCo());
+        assertEquals("PropertyA", testProperty.getPropertyName());
+        assertEquals("LandlordA",testProperty.getLandlordCo());
+        assertTrue(testProperty.isOperating());
+        testPropertyB = new Property("PropertyB","LandlordB");
+    }
+
+    @Test
+    void testPropertyOperatingStatus() {
+        testProperty.close();
+        assertFalse(testProperty.isOperating());
+
+        testProperty.reopen();
         assertTrue(testProperty.isOperating());
     }
+
+
 }

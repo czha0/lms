@@ -7,11 +7,12 @@ public class Property {
     private String propertyName;                // name of the property
     private String landlordCo;                  // the landlord name
     private boolean isOperating;                // if the property is still in use
-    private String leaseID;                     // lease id
+    //private String leaseID;                     // lease id
 
     // EFFECTS: property gets property id number and its landlord name, and is active/operating
     public Property(String name, String landlordName) {
-        this.propertyId = nextPropertyId++;
+        this.propertyId = nextPropertyId;
+        nextPropertyId++;
         this.propertyName = name;
         this.landlordCo = landlordName;
         isOperating = true;
@@ -27,14 +28,12 @@ public class Property {
         return propertyName;
     }
 
-
-
     // EFFECTS: returns landlord name
     public String getLandlordCo() {
         return landlordCo;
     }
 
-    // EFFECTS: returns ture is the property is operating, false otherwise
+    // EFFECTS: returns true if the property is operating, false otherwise
     public boolean isOperating() {
         return isOperating;
     }
@@ -43,12 +42,12 @@ public class Property {
     // MODIFIES: this
     // EFFECTS: closes the property
     public void close() {
-        isOperating = false;
+        this.isOperating = false;
     }
 
     // MODIFIES: this
     // EFFECTS: re-opens the property
     public void reopen() {
-        isOperating = true;
+        this.isOperating = true;
     }
 }
