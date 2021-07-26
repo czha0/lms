@@ -36,12 +36,13 @@ public class LeaseRecordListTest {
     @Test
     void testAddLease() {
         testLeaseRecordList.addLease(testLeaseA);
-        assertEquals(2,testLeaseA.getLeaseId());
+        assertEquals(4,testLeaseA.getLeaseId());
         testLeaseRecordList.addLease(testLeaseB);
         testLeaseRecordList.addLease(testLeaseC);
         testLeaseRecordList.addLease(testLeaseD);
-        testLeaseRecordList.addLease(testLeaseE);
+        assertEquals(testLeaseD, testLeaseRecordList.getLastLease());
 
+        testLeaseRecordList.addLease(testLeaseE);
         assertEquals(testLeaseE, testLeaseRecordList.getLastLease());
     }
 
