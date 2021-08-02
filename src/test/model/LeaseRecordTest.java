@@ -6,14 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LeaseRecordTest {
     private LeaseRecord testLeaseRecord;
-    private Property testProperty;
     private String testStartDate = "01/01/2020";
     private String testEndDate = "12/31/2021";
 
     @BeforeEach
     public void setUp() {
-        testProperty = new Property("PropertyA", "LandlordA");
-        testLeaseRecord = new LeaseRecord(1,1,testStartDate,testEndDate,1000);
+        testLeaseRecord = new LeaseRecord(1,1,Category.COMMERCIAL,testStartDate,testEndDate,1000);
     }
 
     @Test

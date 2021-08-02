@@ -1,29 +1,36 @@
 package ui;
 
+import model.Category;
 import model.LeaseRecord;
 import model.LeaseRecordList;
-import model.Property;
-import model.PropertyList;
-
-import java.util.Locale;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 public class LeaseApp {
+    private static final String JSON_STORE = "./data/rentRoll.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
     private Scanner input;
-    private Property inputProperty;
     private LeaseRecord inputLeaseRecord;
-    private PropertyList uiPropertyList;
     private LeaseRecordList uiLeaseRecordList;
 
-    // EFFECTS: runs the Lease Management application
-    public LeaseApp() {
-        runApp();
+    // EFFECTS: constructs workroom and runs application
+    public LeaseApp() throws FileNotFoundException {
+        input = new Scanner(System.in);
+        uiLeaseRecordList = new LeaseRecordList("ABC Co's Lease Record");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+        runLeaseApp();
     }
 
     // MODIFIES: this
     // EFFECTS: processes user input
     // utilized TellerApp's ui idea
-    public void runApp() {
+    public void runLeaseApp() {
         boolean keepGoing = true;
         String command = null;
 
@@ -50,9 +57,13 @@ public class LeaseApp {
     // EFFECTS: processes user command
     private void processCommand(String command) {
         if (command.equals("a")) {
-            addProperty();
-        } else if (command.equals("c")) {
             addLeaseRecord();
+        } else if (command.equals("p")) {
+            printLeaseRecords();
+        } else if (command.equals("s")) {
+            saveLeaseRecords();
+        } else if (command.equals("l")) {
+            loadLeaseRecords();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -67,33 +78,18 @@ public class LeaseApp {
     // EFFECTS: displays menu of options to user
     private void displayMenu() {
         System.out.println("\nSelect from:");
-        System.out.println("\ta -> add a property");
-        System.out.println("\tc -> add a lease");
+        System.out.println("\ta -> add a lease record");
+        System.out.println("\tp -> print rent roll");
+        System.out.println("\ts -> save rent roll to file");
+        System.out.println("\tl -> load rent roll from file");
         System.out.println("\tq -> quit");
     }
 
-    // EFFECTS: add Property object with user input
-    private void addProperty() {
-        System.out.println("You are creating a new property... \n");
-        System.out.println("Please enter the property name...");
-        String inputPropertyName;
-        inputPropertyName = input.next();
-        System.out.println("Please enter the landlord name...");
-        String inputLandlordName;
-        inputLandlordName = input.next();
-        System.out.println("Processing your new property addition...");
-        inputProperty = new Property(inputPropertyName,inputLandlordName);
-        uiPropertyList = new PropertyList();
-        uiPropertyList.addProperty(inputProperty);
-        System.out.println("Following property added:");
-        System.out.println("Property: " + inputProperty.getPropertyName());
-        System.out.println("Landlord: " + inputProperty.getLandlordCo());
-        System.out.println("Task completed.");
-    }
 
     // EFFECTS: add Lease object with user input
     private void addLeaseRecord() {
         System.out.println("You are creating a new lease record... \n");
+        Category category = readCategory();
         System.out.println("Please enter the lease/contract id (only integer)...");
         int inputLeaseId;
         inputLeaseId = Integer.parseInt(input.next());
@@ -110,18 +106,68 @@ public class LeaseApp {
         int inputPmt;
         inputPmt = Integer.parseInt(input.next());
         System.out.println("Processing your new lease addition...");
-        inputLeaseRecord = new LeaseRecord(inputLeaseId,inputPropID,inputBeginDate,inputEndDate,inputPmt);
-        uiLeaseRecordList = new LeaseRecordList();
+        inputLeaseRecord = new LeaseRecord(inputLeaseId,inputPropID,
+                category,inputBeginDate,inputEndDate,inputPmt);
+        uiLeaseRecordList = new LeaseRecordList("ABC Company");
         uiLeaseRecordList.addLease(inputLeaseRecord);
         confirmLeaseDetails();
     }
 
+    // EFFECTS: prompts user to select category and returns it
+    private Category readCategory() {
+        System.out.println("Please select a category for the lease");
+
+        int menuLabel = 1;
+        for (Category c : Category.values()) {
+            System.out.println(menuLabel + ": " + c);
+            menuLabel++;
+        }
+
+        int menuSelection = input.nextInt();
+        return Category.values()[menuSelection - 1];
+    }
+
+    // EFFECTS: print out lease details when input data from keyboard
     private void confirmLeaseDetails() {
         System.out.println("Following lease added:");
+        System.out.println("Lease type: " + inputLeaseRecord.getCategory());
         System.out.println("Lease ID: " + inputLeaseRecord.getLeaseId());
         System.out.println("Property ID: " + inputLeaseRecord.getLeasePropId());
         System.out.println("Lease period: " + inputLeaseRecord.getStartDate() + " to " + inputLeaseRecord.getEndDate());
         System.out.println("Monthly Rent Amount is $" + inputLeaseRecord.getRentAmt());
         System.out.println("Task completed.");
     }
+
+    // EFFECTS: prints all the leaseRecords (rentRoll) in rentRoll to the console
+    private void printLeaseRecords() {
+        List<LeaseRecord> rentRoll = uiLeaseRecordList.getLeaseRecords();
+
+        for (LeaseRecord lr : rentRoll) {
+            System.out.println(lr);
+        }
+    }
+
+    // EFFECTS: saves the leaseRecords (rentRoll) to file
+    private void saveLeaseRecords() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(uiLeaseRecordList);
+            jsonWriter.close();
+            System.out.println("Saved " + uiLeaseRecordList.getCompanyName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads leaseRecords (rentRoll) from file
+    private void loadLeaseRecords() {
+        try {
+            uiLeaseRecordList = jsonReader.read();
+            System.out.println("Loaded " + uiLeaseRecordList.getCompanyName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
 }

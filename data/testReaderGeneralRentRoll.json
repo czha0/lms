@@ -1,0 +1,23 @@
+{
+    "records": [
+        {
+            "leaseID": 1,
+            "isCurrent": true,
+            "endDate": "31/DEC/2022",
+            "propID": 1,
+            "category": "COMMERCIAL",
+            "monthlyPay": 1000,
+            "startDate": "01/JAN/2020"
+        },
+        {
+            "leaseID": 2,
+            "isCurrent": true,
+            "endDate": "31/DEC/2022",
+            "propID": 2,
+            "category": "OFFICE",
+            "monthlyPay": 3000,
+            "startDate": "01/JAN/2020"
+        }
+    ],
+    "companyName": "ABC Company"
+}
