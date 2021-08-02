@@ -13,7 +13,7 @@ class LeaseRecordTest {
     @BeforeEach
     public void setUp() {
         testProperty = new Property("PropertyA", "LandlordA");
-        testLeaseRecord = new LeaseRecord(1,testStartDate,testEndDate,1000);
+        testLeaseRecord = new LeaseRecord(1,1,testStartDate,testEndDate,1000);
     }
 
     @Test

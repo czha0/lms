@@ -5,7 +5,6 @@ public class LeaseRecord {
 
     private int leaseId;                    // lease id
     private int leasePropId;                // property id for the lease
-    private static int nextLeaseId = 1;     // tracks id of next lease documented
     private String startDate;               // lease starting date
     private String endDate;                 // lease starting date
     private boolean isCurrent;              // if the lease is current
@@ -13,8 +12,8 @@ public class LeaseRecord {
 
     //REQUIRES: existing property id, start and end date in dd/MM/yyyy format
     //EFFECTS: lease record gets lease id and its details
-    public LeaseRecord(int propId, String beginDate, String endDate, int payment) {
-        this.leaseId = nextLeaseId++;
+    public LeaseRecord(int leaseId, int propId, String beginDate, String endDate, int payment) {
+        this.leaseId = leaseId;
         this.leasePropId = propId;
         this.startDate = beginDate;
         this.endDate = endDate;

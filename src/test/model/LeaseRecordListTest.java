@@ -21,11 +21,11 @@ public class LeaseRecordListTest {
     @BeforeEach
     public void setUp() {
         testLeaseRecordList = new LeaseRecordList();
-        testLeaseA = new LeaseRecord(1,testStartDate1,testEndDate1,testRentAmt);
-        testLeaseB = new LeaseRecord(2,testStartDate1,testEndDate1,testRentAmt);
-        testLeaseC = new LeaseRecord(3,testStartDate2,testEndDate2,testRentAmt);
-        testLeaseD = new LeaseRecord(4,testStartDate1,testEndDate1,testRentAmt);
-        testLeaseE = new LeaseRecord(5,testStartDate1,testEndDate1,testRentAmt);
+        testLeaseA = new LeaseRecord(1,1,testStartDate1,testEndDate1,testRentAmt);
+        testLeaseB = new LeaseRecord(2,2,testStartDate1,testEndDate1,testRentAmt);
+        testLeaseC = new LeaseRecord(3,3,testStartDate2,testEndDate2,testRentAmt);
+        testLeaseD = new LeaseRecord(4,4,testStartDate1,testEndDate1,testRentAmt);
+        testLeaseE = new LeaseRecord(5,5,testStartDate1,testEndDate1,testRentAmt);
     }
 
     @Test
@@ -36,8 +36,9 @@ public class LeaseRecordListTest {
     @Test
     void testAddLease() {
         testLeaseRecordList.addLease(testLeaseA);
-        assertEquals(4,testLeaseA.getLeaseId());
+        assertEquals(1,testLeaseA.getLeaseId());
         testLeaseRecordList.addLease(testLeaseB);
+        assertEquals(2,testLeaseB.getLeaseId());
         testLeaseRecordList.addLease(testLeaseC);
         testLeaseRecordList.addLease(testLeaseD);
         assertEquals(testLeaseD, testLeaseRecordList.getLastLease());

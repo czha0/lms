@@ -94,6 +94,9 @@ public class LeaseApp {
     // EFFECTS: add Lease object with user input
     private void addLeaseRecord() {
         System.out.println("You are creating a new lease record... \n");
+        System.out.println("Please enter the lease/contract id (only integer)...");
+        int inputLeaseId;
+        inputLeaseId = Integer.parseInt(input.next());
         System.out.println("Please enter the property id (only integer)...");
         int inputPropID;
         inputPropID = Integer.parseInt(input.next());
@@ -107,9 +110,13 @@ public class LeaseApp {
         int inputPmt;
         inputPmt = Integer.parseInt(input.next());
         System.out.println("Processing your new lease addition...");
-        inputLeaseRecord = new LeaseRecord(inputPropID,inputBeginDate,inputEndDate,inputPmt);
+        inputLeaseRecord = new LeaseRecord(inputLeaseId,inputPropID,inputBeginDate,inputEndDate,inputPmt);
         uiLeaseRecordList = new LeaseRecordList();
         uiLeaseRecordList.addLease(inputLeaseRecord);
+        confirmLeaseDetails();
+    }
+
+    private void confirmLeaseDetails() {
         System.out.println("Following lease added:");
         System.out.println("Lease ID: " + inputLeaseRecord.getLeaseId());
         System.out.println("Property ID: " + inputLeaseRecord.getLeasePropId());

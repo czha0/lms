@@ -20,16 +20,17 @@ and also to fulfill his computer science course requirement [^2] .
 3. Data output for extracted analysis
 
 ## User Stories (Who will use it?/ Scope of Work)
-**BOLDED items included in Phase 2 of this project**
+**BOLDED items included in Phase 1 of this project**
 
 *(italics functions **MIGHT NOT** be implemented in this project)*
 
 1.  Lease administrator
     * Manage (set) lease details, such as:
         * Set up properties to rent with unique ID
+        * Lease starts and expiration dates
         * Confirm input once new lease/property processed to the system
-        * **Save keyed in information when exit**
-        * **Reload saved information in next session**
+        * **Save current data once in the menu**
+        * **Reload data saved in previous session**
         * *Lease location: store number, details address, etc.*
         * *//Update lease expiration when renewals come*
         * *//Additional fields to make notes for specific lease*

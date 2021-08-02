@@ -3,7 +3,7 @@ package model;
 // Represents an property having an id, landlord and lease id
 public class Property {
     private int propertyId;                     //property id
-    private static int nextPropertyId = 1;      // tracks id of next property created
+    private int nextPropertyId = 1;      // tracks id of next property created
     private String propertyName;                // name of the property
     private String landlordCo;                  // the landlord name
     private boolean isOperating;                // if the property is still in use
