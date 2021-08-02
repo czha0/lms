@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
+// Use ideas from Demo App
 public class LeaseApp {
     private static final String JSON_STORE = "./data/rentRoll.json";
     private JsonWriter jsonWriter;
@@ -18,7 +19,7 @@ public class LeaseApp {
     private LeaseRecord inputLeaseRecord;
     private LeaseRecordList uiLeaseRecordList;
 
-    // EFFECTS: constructs workroom and runs application
+    // EFFECTS: constructs Leases and runs application
     public LeaseApp() throws FileNotFoundException {
         input = new Scanner(System.in);
         uiLeaseRecordList = new LeaseRecordList("ABC Co's Lease Record");
