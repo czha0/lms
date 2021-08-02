@@ -1,5 +1,5 @@
 # Lease/Rent Management System
-Version 0.1/ Jul 24, 2021/ &copy; Cranberry (s6v0b)
+Version 0.2/ Aug 02, 2021/ &copy; Cranberry (s6v0b)
 
 ## About the Project [^1] 
 
@@ -20,15 +20,16 @@ and also to fulfill his computer science course requirement [^2] .
 3. Data output for extracted analysis
 
 ## User Stories (Who will use it?/ Scope of Work)
-**BOLDED items included in Phase 1 of this project**
+**BOLDED items included in Phase 2 of this project**
 
 *(italics functions **MIGHT NOT** be implemented in this project)*
 
 1.  Lease administrator
     * Manage (set) lease details, such as:
-        * **Set up properties to rent with unique ID**
-        * **Lease starts and expiration dates**
-        * **Confirm input once new lease/property processed to the system**
+        * Set up properties to rent with unique ID
+        * Confirm input once new lease/property processed to the system
+        * **Save keyed in information when exit**
+        * **Reload saved information in next session**
         * *Lease location: store number, details address, etc.*
         * *//Update lease expiration when renewals come*
         * *//Additional fields to make notes for specific lease*
@@ -38,7 +39,7 @@ and also to fulfill his computer science course requirement [^2] .
 2. Finance department 
     * Monitor expired lease to prevent sending cheques to expired contract
       * *Print out *(or export)* current rent roll (active leases)*
-      * **Print out total monthly payment for active leases**
+      * *Print out total monthly payment for active leases*
 
     
 [^1]: Why is this project of interest of you?
