@@ -12,17 +12,18 @@ import java.util.Scanner;
 
 // Use ideas from Demo App
 public class LeaseApp {
-    private static final String JSON_STORE = "./data/rentRoll.json";
+    private static String JSON_STORE = "./data/rentRoll.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private Scanner input;
+    private String companyName = "ABC Company";     // company name
     private LeaseRecord inputLeaseRecord;
     private LeaseRecordList uiLeaseRecordList;
 
     // EFFECTS: constructs Leases and runs application
     public LeaseApp() throws FileNotFoundException {
         input = new Scanner(System.in);
-        uiLeaseRecordList = new LeaseRecordList("ABC Co's Lease Record");
+        uiLeaseRecordList = new LeaseRecordList(companyName);
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         runLeaseApp();
@@ -65,6 +66,8 @@ public class LeaseApp {
             saveLeaseRecords();
         } else if (command.equals("l")) {
             loadLeaseRecords();
+        } else if (command.equals("c")) {
+            changeFileName();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -83,12 +86,14 @@ public class LeaseApp {
         System.out.println("\tp -> print rent roll");
         System.out.println("\ts -> save rent roll to file");
         System.out.println("\tl -> load rent roll from file");
+        System.out.println("\tc -> change save file name");
         System.out.println("\tq -> quit");
     }
 
 
     // EFFECTS: add Lease object with user input
     private void addLeaseRecord() {
+        uiLeaseRecordList = new LeaseRecordList(companyName);
         System.out.println("You are creating a new lease record... \n");
         Category category = readCategory();
         System.out.println("Please enter the lease/contract id (only integer)...");
@@ -109,7 +114,6 @@ public class LeaseApp {
         System.out.println("Processing your new lease addition...");
         inputLeaseRecord = new LeaseRecord(inputLeaseId,inputPropID,
                 category,inputBeginDate,inputEndDate,inputPmt);
-        uiLeaseRecordList = new LeaseRecordList("ABC Company");
         uiLeaseRecordList.addLease(inputLeaseRecord);
         confirmLeaseDetails();
     }
@@ -169,6 +173,14 @@ public class LeaseApp {
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: change company name in file
+    private void changeFileName() {
+        String fileName;
+        fileName = input.next();
+        JSON_STORE = "./data/" + fileName + ".json";
     }
 
 }
