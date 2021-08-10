@@ -39,6 +39,7 @@ public class LeaseApp {
         init();
 
         System.out.println("Welcome to Lease Management System");
+        uiLeaseRecordList = new LeaseRecordList(companyName);
 
         while (keepGoing) {
             displayMenu();
@@ -93,7 +94,7 @@ public class LeaseApp {
 
     // EFFECTS: add Lease object with user input
     private void addLeaseRecord() {
-        uiLeaseRecordList = new LeaseRecordList(companyName);
+
         System.out.println("You are creating a new lease record... \n");
         Category category = readCategory();
         System.out.println("Please enter the lease/contract id (only integer)...");
