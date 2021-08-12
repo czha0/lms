@@ -5,18 +5,27 @@
             "isCurrent": true,
             "endDate": "31/DEC/2021",
             "propID": 1,
-            "category": "COMMERCIAL",
-            "monthlyPay": 1500,
+            "category": "MIXED",
+            "monthlyPay": 2500,
             "startDate": "01/JAN/2020"
         },
         {
             "leaseID": 2,
             "isCurrent": true,
-            "endDate": "31/DEC/2021",
+            "endDate": "30/JUN/2022",
             "propID": 2,
-            "category": "OFFICE",
-            "monthlyPay": 2000,
-            "startDate": "01/JAN/2018"
+            "category": "MIXED",
+            "monthlyPay": 3600,
+            "startDate": "01/DEC/2019"
+        },
+        {
+            "leaseID": 3,
+            "isCurrent": true,
+            "endDate": "21/DEC/2020",
+            "propID": 3,
+            "category": "MIXED",
+            "monthlyPay": 3670,
+            "startDate": "01/FEB/2019"
         }
     ],
     "companyName": "ABC Company"

@@ -7,12 +7,12 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import java.util.Scanner;
 
 public class LeaseGui implements ActionListener {
     // variables used for GUI
@@ -31,18 +31,20 @@ public class LeaseGui implements ActionListener {
     private static JTextField startText;
     private static JLabel endLabel;
     private static JTextField endText;
-    private static JButton saveButton;
-    private static JButton clearButton;
-    private static JButton loadButton;
-    private static JButton newButton;
-    private static JButton printButton;
+    private static JList categoryList;
+    private final String newline = "\n";
+    private JButton saveButton;
+    private JButton clearButton;
+    private JButton loadButton;
+    private JButton newButton;
+    private JButton printButton;
+    private JButton addButton;
 
     // variables used for JSON save data
     private static String JSON_STORE = "./data/rentRoll.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
-    private Scanner input;
-    private String companyName = "ABC Company";     // company name
+    private String companyName = "ABC Company";
     private LeaseRecord inputLeaseRecord;
     private LeaseRecordList uiLeaseRecordList;
     int inputLeaseId;
@@ -53,14 +55,18 @@ public class LeaseGui implements ActionListener {
     String inputEndDate;
 
 
-    public static void main(String[] args) {
+    // EFFECTS: constructs Leases and runs application
+    public LeaseGui() throws FileNotFoundException {
+        uiLeaseRecordList = new LeaseRecordList(companyName);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         leaseGui();
     }
 
-    public static void leaseGui() {
-        frame = new JFrame();
+    public void leaseGui() throws FileNotFoundException {
+        frame = new JFrame("Lease Management System");
         panel = new JPanel();
-        frame.setSize(600,400);
+        frame.setSize(600,500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         frame.add(panel);
@@ -70,40 +76,52 @@ public class LeaseGui implements ActionListener {
         leaseLabelSetUp();
         leaseLabelDetailSetUp();
         buttonSetUp();
+        buttonJsonSetUp();
+//        setScreenPrinter();
 
         frame.setVisible(true);
     }
 
     // EFFECTS: Setup Buttons on the bottom of GUI
-    private static void buttonSetUp() {
-        saveButton = new JButton("Add Record");
-        saveButton.setBounds(10,200,100,25);
-        saveButton.addActionListener(new LeaseGui());
-        panel.add(saveButton);
+    private void buttonSetUp() throws FileNotFoundException {
+        addButton = new JButton("Add Record");
+        addButton.setBounds(10,200,100,25);
+        addButton.addActionListener(this::actionPerformed);
+        panel.add(addButton);
 
-        clearButton = new JButton("Clear Data");
+        clearButton = new JButton("Clear Input");
         clearButton.setBounds(150,200,100,25);
-        clearButton.addActionListener(new LeaseGui());
+        clearButton.addActionListener(this::actionPerformed);
         panel.add(clearButton);
 
+
+    }
+
+    // EFFECTS: Setup Buttons on the bottom of GUI for JSON related functions
+    private void buttonJsonSetUp() throws FileNotFoundException {
+        saveButton = new JButton("Save Data");
+        saveButton.setBounds(250, 200, 100, 25);
+        saveButton.addActionListener(this::actionPerformed);
+        panel.add(saveButton);
+
         loadButton = new JButton("Load Data");
-        loadButton.setBounds(250,200,100,25);
-        loadButton.addActionListener(new LeaseGui());
+        loadButton.setBounds(250, 230, 100, 25);
+        loadButton.addActionListener(this::actionPerformed);
         panel.add(loadButton);
 
-        newButton = new JButton("New Rent Roll");
-        newButton.setBounds(350,200,150,25);
-        newButton.addActionListener(new LeaseGui());
+        newButton = new JButton("Delete All Data");
+        newButton.setBounds(350, 200, 150, 25);
+        newButton.addActionListener(this::actionPerformed);
         panel.add(newButton);
 
         printButton = new JButton("Print Rent Roll");
-        printButton.setBounds(350,230,150,25);
-        printButton.addActionListener(new LeaseGui());
+        printButton.setBounds(350, 230, 150, 25);
+        printButton.addActionListener(this::actionPerformed);
         panel.add(printButton);
     }
 
     // EFFECTS: Set up labels for lease record details
-    private static void leaseLabelDetailSetUp() {
+    private void leaseLabelDetailSetUp() {
         // lease monthly payment field set up
         monthlyPayLabel = new JLabel("Monthly Rent");
         monthlyPayLabel.setBounds(10,70,100,25);
@@ -133,7 +151,7 @@ public class LeaseGui implements ActionListener {
     }
 
     // EFFECTS: Set up labels for lease record
-    private static void leaseLabelSetUp() {
+    private void leaseLabelSetUp() {
         // lease ID field set up
         leaseIdLabel = new JLabel("Lease ID");
         leaseIdLabel.setBounds(10,10,100,25);
@@ -166,13 +184,10 @@ public class LeaseGui implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == saveButton) {
             saveData();
-            System.out.println("Saved");
-            JLabel msgFeedback = new JLabel("");
-            msgFeedback.setBounds(10,250,600,600);
-            panel.add(msgFeedback);
-            msgFeedback.setText("Lease Record Added.");
         } else if (e.getSource() == clearButton) {
             setAllClear();
+        } else if (e.getSource() == addButton) {
+            addRecord();
         } else if (e.getSource() == newButton) {
             setNewCompany();
         } else if (e.getSource() == printButton) {
@@ -204,23 +219,29 @@ public class LeaseGui implements ActionListener {
 
     }
 
-    // EFFECTS: saves the leaseRecords (rentRoll) to file
-    public void saveData() {
-        uiLeaseRecordList = new LeaseRecordList(companyName);
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
+
+    // EFFECTS: add current lease record the leaseRecords (rentRoll)
+    public void addRecord() {
         this.getTextFields();
         inputLeaseRecord = new LeaseRecord(inputLeaseId, inputPropId,inputCategory,inputStartDate,
                 inputEndDate,inputRent);
         uiLeaseRecordList.addLease(inputLeaseRecord);
+        setAllClear();
+    }
 
+    // EFFECTS: saves the leaseRecords (rentRoll) to file
+    public void saveData() {
         try {
             jsonWriter.open();
             jsonWriter.write(uiLeaseRecordList);
             jsonWriter.close();
-            System.out.println("Saved " + uiLeaseRecordList.getCompanyName() + " to " + JSON_STORE);
+            System.out.println("Saved this lease to " + JSON_STORE);
+            JOptionPane.showMessageDialog(null,"Saved "
+                    + uiLeaseRecordList.getCompanyName() + " to " + JSON_STORE);
+
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
+            JOptionPane.showMessageDialog(null,"Unable to write to file: " + JSON_STORE);
         }
     }
 
@@ -240,18 +261,40 @@ public class LeaseGui implements ActionListener {
         try {
             this.uiLeaseRecordList = jsonReader.read();
             System.out.println("Loaded " + uiLeaseRecordList.getCompanyName() + " from " + JSON_STORE);
+            JOptionPane.showMessageDialog(null,"Loaded "
+                    + uiLeaseRecordList.getCompanyName() + " from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
+            JOptionPane.showMessageDialog(null,"Unable to read from file: " + JSON_STORE);
         }
     }
 
     // EFFECTS: prints all the leaseRecords (rentRoll) in rentRoll to the console
     private void printRentRoll() {
-        loadLeaseRecords();
         List<LeaseRecord> rentRoll = uiLeaseRecordList.getLeaseRecords();
-
+        JOptionPane.showMessageDialog(null,"Printing Data on Console");
+        System.out.println("Printing Data on Console");
         for (LeaseRecord lr : rentRoll) {
             System.out.println(lr);
         }
     }
+
+//    // EFFECTS: initialize text print
+//    public void setScreenPrinter() {
+//        // Set the contents of the JTextArea.
+//        printArea = new JTextArea();
+//        String text = "Showing Console data.";
+//        printArea.setText(text);
+//        printArea.setLineWrap(true);
+//        printArea.setWrapStyleWord(true);
+//
+//        JScrollPane scrollPane = new JScrollPane(printArea);
+//        scrollPane.setPreferredSize(new Dimension(500, 200));
+//        printArea.setEditable(false);
+//        scrollPane.setVerticalScrollBarPolicy(
+//                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+//
+//    }
+
+
 }
