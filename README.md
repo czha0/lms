@@ -1,7 +1,7 @@
 # Lease/Rent Management System
 Version 0.4/ Aug 12, 2021/ &copy; Cranberry (s6v0b)
 
-## About the Project [^1] 
+## About the Project
 
 The author *(he/him/his)* works at a Canadian retail corporate.
 A part of his routine task is to produce lease analysis to the management team.
@@ -11,7 +11,7 @@ He also produces complete lease schedule for external auditors semi-annually.
 Current process is repetitive and could be streamlined.
 Without existing ERP package to cater such function,
 the author decides to create such a system to automate the analysis
-and also to fulfill his computer science course requirement [^2] .
+and also to fulfill his computer science course requirement.
 
 ## Function for the Project (What will the application do?)
 
@@ -41,8 +41,12 @@ and also to fulfill his computer science course requirement [^2] .
       * **Print out *(or export)* current rent roll (active leases)**
       * *Print out total monthly payment for active leases*
 
-    
-[^1]: Why is this project of interest of you?
+**Phase 4: Task 2**
 
-[^2]: This project is **not** providing interface to external ERP systems, due to course
-restriction of using external libraries.
+A new method *payMonthlyRent()* **Line 46**
+designed for this task in LeaseRecordList.
+Corresponding test added for coverage. This function is *NOT* part of user story.
+As it is added to fulfill the requirement.
+
+**Phase 4: Task 3**
+

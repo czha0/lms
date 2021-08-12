@@ -39,4 +39,10 @@ class LeaseRecordTest {
         assertTrue(testLeaseRecord.isCurrent());
     }
 
+    @Test
+    void testToString() {
+        assertEquals("Lease ID 1: Property ID 1 is a COMMERCIAL lease starts from" +
+                " 01/01/2020 to 12/31/2021 with monthly rate at $1000",testLeaseRecord.toString());
+    }
+
 }

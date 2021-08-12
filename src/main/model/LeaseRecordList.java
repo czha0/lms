@@ -42,13 +42,16 @@ public class LeaseRecordList implements Writable {
         return totalMonthlyPay;
     }
 
-    // EFFECTS: returns total monthly payment in the rent roll
-    public int makePayment() throws InsufficientResourcesException {
+    // EFFECTS: check if current funds can cover payment and update current fund when paid
+    public boolean payMonthlyRent() throws NoSufficientFundException {
+        this.totalPayment();
         if (currentFunds >= this.getTotalMonthlyPay()) {
-            return currentFunds = currentFunds - this.getTotalMonthlyPay();
+            this.currentFunds = currentFunds - this.getTotalMonthlyPay();
+            return true;
         } else {
-            throw new InsufficientResourcesException("Not enough funds to pay rent.");
+            throw new NoSufficientFundException();
         }
+
     }
 
     // EFFECTS: returns total monthly payment

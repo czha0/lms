@@ -2,8 +2,6 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.naming.InsufficientResourcesException;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LeaseRecordListTest {
@@ -64,8 +62,8 @@ public class LeaseRecordListTest {
         testLeaseRecordList.addLease(testLeaseC);
         assertEquals(3000,testLeaseRecordList.totalPayment());
         try {
-            testLeaseRecordList.makePayment();
-        } catch (InsufficientResourcesException e) {
+            testLeaseRecordList.payMonthlyRent();
+        } catch (Exception e) {
             // enough to cover payment, no exception thrown
         }
         assertEquals(0,testLeaseRecordList.getCurrentFunds());
@@ -80,9 +78,9 @@ public class LeaseRecordListTest {
         testLeaseRecordList.addLease(testLeaseC);
         testLeaseRecordList.addLease(testLeaseD);
         try {
-            testLeaseRecordList.makePayment();
-        } catch (InsufficientResourcesException e) {
-            fail("No enough funds.");
+            testLeaseRecordList.payMonthlyRent();
+        } catch (Exception e) {
+            //exception thrown
         }
         assertEquals(2000,testLeaseRecordList.getCurrentFunds());
     }
