@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 // Use ideas from Demo App
+// Runs lease app in the console
 public class LeaseApp {
     private static String JSON_STORE = "./data/rentRoll.json";
     private JsonWriter jsonWriter;

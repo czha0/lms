@@ -3,6 +3,9 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
+import javax.swing.*;
+import java.util.List;
+
 // Represents lease records having an unique id, property id start date, end date, if the lease id active
 public class LeaseRecord implements Writable {
 
@@ -25,6 +28,8 @@ public class LeaseRecord implements Writable {
         this.monthlyPmt = payment;
         isCurrent = true;
     }
+
+
 
     // EFFECTS: returns lease id
     public int getLeaseId() {
@@ -82,6 +87,7 @@ public class LeaseRecord implements Writable {
                 + " with monthly rate at $" + monthlyPmt;
     }
 
+    // EFFECTS: JSON object define text fields
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

@@ -5,15 +5,15 @@ import model.LeaseRecord;
 import model.LeaseRecordList;
 import persistence.JsonReader;
 import persistence.JsonWriter;
-
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
+
+// Runs Lease App called from Main Class
 public class LeaseGui implements ActionListener {
     // variables used for GUI
     // idea from https://www.youtube.com/watch?v=Hiv3gwJC5kw
@@ -31,8 +31,6 @@ public class LeaseGui implements ActionListener {
     private static JTextField startText;
     private static JLabel endLabel;
     private static JTextField endText;
-    private static JList categoryList;
-    private final String newline = "\n";
     private JButton saveButton;
     private JButton clearButton;
     private JButton loadButton;
@@ -63,6 +61,7 @@ public class LeaseGui implements ActionListener {
         leaseGui();
     }
 
+    // EFFECTS: constructs GUI with frame, panel, label, texts and buttons
     public void leaseGui() throws FileNotFoundException {
         frame = new JFrame("Lease Management System");
         panel = new JPanel();
@@ -77,43 +76,46 @@ public class LeaseGui implements ActionListener {
         leaseLabelDetailSetUp();
         buttonSetUp();
         buttonJsonSetUp();
-//        setScreenPrinter();
 
         frame.setVisible(true);
     }
 
     // EFFECTS: Setup Buttons on the bottom of GUI
-    private void buttonSetUp() throws FileNotFoundException {
+    private void buttonSetUp() {
+        // add record button
         addButton = new JButton("Add Record");
         addButton.setBounds(10,200,100,25);
         addButton.addActionListener(this::actionPerformed);
         panel.add(addButton);
 
+        // clear input button
         clearButton = new JButton("Clear Input");
         clearButton.setBounds(150,200,100,25);
         clearButton.addActionListener(this::actionPerformed);
         panel.add(clearButton);
-
-
     }
 
     // EFFECTS: Setup Buttons on the bottom of GUI for JSON related functions
-    private void buttonJsonSetUp() throws FileNotFoundException {
+    private void buttonJsonSetUp() {
+        // save data button
         saveButton = new JButton("Save Data");
         saveButton.setBounds(250, 200, 100, 25);
         saveButton.addActionListener(this::actionPerformed);
         panel.add(saveButton);
 
+        // load data button
         loadButton = new JButton("Load Data");
         loadButton.setBounds(250, 230, 100, 25);
         loadButton.addActionListener(this::actionPerformed);
         panel.add(loadButton);
 
+        // delete all data button
         newButton = new JButton("Delete All Data");
         newButton.setBounds(350, 200, 150, 25);
         newButton.addActionListener(this::actionPerformed);
         panel.add(newButton);
 
+        // print all button
         printButton = new JButton("Print Rent Roll");
         printButton.setBounds(350, 230, 150, 25);
         printButton.addActionListener(this::actionPerformed);
@@ -126,7 +128,6 @@ public class LeaseGui implements ActionListener {
         monthlyPayLabel = new JLabel("Monthly Rent");
         monthlyPayLabel.setBounds(10,70,100,25);
         panel.add(monthlyPayLabel);
-
         monthlyPayText = new JTextField(5);
         monthlyPayText.setBounds(100,70,165,25);
         panel.add(monthlyPayText);
@@ -135,7 +136,6 @@ public class LeaseGui implements ActionListener {
         startLabel = new JLabel("Lease Start");
         startLabel.setBounds(10,90,100,25);
         panel.add(startLabel);
-
         startText = new JTextField(5);
         startText.setBounds(100,90,165,25);
         panel.add(startText);
@@ -144,7 +144,6 @@ public class LeaseGui implements ActionListener {
         endLabel = new JLabel("Lease End");
         endLabel.setBounds(320,90,100,25);
         panel.add(endLabel);
-
         endText = new JTextField(5);
         endText.setBounds(400,90,165,25);
         panel.add(endText);
@@ -156,7 +155,6 @@ public class LeaseGui implements ActionListener {
         leaseIdLabel = new JLabel("Lease ID");
         leaseIdLabel.setBounds(10,10,100,25);
         panel.add(leaseIdLabel);
-
         leaseIdText = new JTextField(5);
         leaseIdText.setBounds(100,10,165,25);
         panel.add(leaseIdText);
@@ -165,7 +163,6 @@ public class LeaseGui implements ActionListener {
         propertyIdLabel = new JLabel("Property ID");
         propertyIdLabel.setBounds(10,30,100,25);
         panel.add(propertyIdLabel);
-
         propertyIdText = new JTextField(5);
         propertyIdText.setBounds(100,30,165,25);
         panel.add(propertyIdText);
@@ -174,12 +171,12 @@ public class LeaseGui implements ActionListener {
         categoryLabel = new JLabel("Category");
         categoryLabel.setBounds(10,50,100,25);
         panel.add(categoryLabel);
-
         categoryText = new JTextField(5);
         categoryText.setBounds(100,50,165,25);
         panel.add(categoryText);
     }
 
+    // EFFECTS: Set button to act respective methods when clicked upon
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == saveButton) {
@@ -216,9 +213,7 @@ public class LeaseGui implements ActionListener {
         monthlyPayText.setText("");
         startText.setText("");
         endText.setText("");
-
     }
-
 
     // EFFECTS: add current lease record the leaseRecords (rentRoll)
     public void addRecord() {
@@ -295,6 +290,5 @@ public class LeaseGui implements ActionListener {
 //                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 //
 //    }
-
 
 }

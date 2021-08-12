@@ -1,6 +1,9 @@
 package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import javax.naming.InsufficientResourcesException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LeaseRecordListTest {
@@ -31,6 +34,7 @@ public class LeaseRecordListTest {
     @Test
     void testConstructor() {
         assertEquals(0, testLeaseRecordList.length());
+        assertEquals(0,testLeaseRecordList.getCurrentFunds());
     }
 
     @Test
@@ -43,5 +47,44 @@ public class LeaseRecordListTest {
         testLeaseRecordList.addLease(testLeaseD);
     }
 
+    @Test
+    void testTotalMonthlyPay() {
+        testLeaseRecordList.addLease(testLeaseA);
+        testLeaseRecordList.addLease(testLeaseB);
+        testLeaseRecordList.addLease(testLeaseC);
+        assertEquals(3000, testLeaseRecordList.totalPayment());
+    }
+
+    @Test
+    void testEnoughFundToPay() {
+        testLeaseRecordList.addDeposit(3000);
+        assertEquals(3000,testLeaseRecordList.getCurrentFunds());
+        testLeaseRecordList.addLease(testLeaseA);
+        testLeaseRecordList.addLease(testLeaseB);
+        testLeaseRecordList.addLease(testLeaseC);
+        assertEquals(3000,testLeaseRecordList.totalPayment());
+        try {
+            testLeaseRecordList.makePayment();
+        } catch (InsufficientResourcesException e) {
+            // enough to cover payment, no exception thrown
+        }
+        assertEquals(0,testLeaseRecordList.getCurrentFunds());
+    }
+
+    @Test
+    void testNotEnoughFundToPay() {
+        testLeaseRecordList.addDeposit(2000);
+        assertEquals(2000,testLeaseRecordList.getCurrentFunds());
+        testLeaseRecordList.addLease(testLeaseA);
+        testLeaseRecordList.addLease(testLeaseB);
+        testLeaseRecordList.addLease(testLeaseC);
+        testLeaseRecordList.addLease(testLeaseD);
+        try {
+            testLeaseRecordList.makePayment();
+        } catch (InsufficientResourcesException e) {
+            fail("No enough funds.");
+        }
+        assertEquals(2000,testLeaseRecordList.getCurrentFunds());
+    }
 
 }
