@@ -41,15 +41,22 @@ and also to fulfill his computer science course requirement.
       * **Print out *(or export)* current rent roll (active leases)**
       * *Print out total monthly payment for active leases*
 
-**Phase 4: Task 2**
+##Phase 4: Task 2
 
 A new method *payMonthlyRent()* **Line 46**
 designed for this task in LeaseRecordList.
 Corresponding test added for coverage. This function is *NOT* part of user story.
 As it is added to fulfill the requirement.
 
-**Phase 4: Task 3**
+##Phase 4: Task 3
 
-A dedicated PaymentManager Class could be added with Calendar class
-implemented for Date. Also, GUI could be improved by adding showing screen
-through using JTable.
+I would refactor a new class called PaymentManager to handle
+rent payment related functions/methods. It would be also easier
+to expand the function for such a new class in the future.
+
+As for LeaseGui, I can also refactor each button with ActionListener
+rather than using condition(if) statement to trigger methods.
+In this way, UML would be easier to follow.
+
+LeaseApp class in ui package is similar to LeaseGui class.
+Therefore, it is not reflected in the UML graph.
