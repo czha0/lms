@@ -50,3 +50,6 @@ As it is added to fulfill the requirement.
 
 **Phase 4: Task 3**
 
+A dedicated PaymentManager Class could be added with Calendar class
+implemented for Date. Also, GUI could be improved by adding showing screen
+through using JTable.

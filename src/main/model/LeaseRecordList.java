@@ -4,9 +4,6 @@ import model.exceptions.NoSufficientFundException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
-
-import javax.naming.InsufficientResourcesException;
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
