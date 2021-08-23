@@ -1,5 +1,5 @@
 # Lease/Rent Management System
-Version 0.4/ Aug 12, 2021/ &copy; Cranberry (s6v0b)
+Version 0.5/ Aug 20, 2021/ &copy; CZ
 
 ## About the Project
 
@@ -20,7 +20,7 @@ and also to fulfill his computer science course requirement.
 3. Data output from extraction
 
 ## User Stories (Who will use it?/ Scope of Work)
-**BOLDED items included in Phase 4 of this project**
+**BOLDED items included in current Phase of this project**
 
 *(italics functions **NOT** implemented in this project)*
 
@@ -40,23 +40,3 @@ and also to fulfill his computer science course requirement.
     * Monitor expired lease to prevent sending cheques to expired contract
       * **Print out *(or export)* current rent roll (active leases)**
       * *Print out total monthly payment for active leases*
-
-##Phase 4: Task 2
-
-A new method *payMonthlyRent()* **Line 46**
-designed for this task in LeaseRecordList.
-Corresponding test added for coverage. This function is *NOT* part of user story.
-As it is added to fulfill the requirement.
-
-##Phase 4: Task 3
-
-I would refactor a new class called PaymentManager to handle
-rent payment related functions/methods. It would be also easier
-to expand the function for such a new class in the future.
-
-As for LeaseGui, I can also refactor each button with ActionListener
-rather than using condition(if) statement to trigger methods.
-In this way, UML would be easier to follow.
-
-LeaseApp class in ui package is similar to LeaseGui class.
-Therefore, it is not reflected in the UML graph.
